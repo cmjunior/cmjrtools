@@ -1,0 +1,104 @@
+mat-header-row {
+    min-height: 36px;
+}
+
+mat-row {
+    min-height: 32px;
+}
+
+mat-cell,
+mat-header-cell,
+mat-footer-cell {
+    height: 32px;
+    font-size: 11px;
+}
+
+mat-footer-row {
+    min-height: 36px;
+}
+
+mat-cell:first-of-type, 
+mat-footer-cell:first-of-type, 
+mat-header-cell:first-of-type {
+    padding-left: 4px;
+}
+
+mat-cell:last-of-type, 
+mat-footer-cell:last-of-type, 
+mat-header-cell:last-of-type {
+    padding-right: 4px;
+}
+
+.number {
+    display: flex !important;
+    justify-content: center !important;
+}
+
+.center {
+    display: flex !important;
+    justify-content: center !important;
+}
+
+.element-hover.element-row:hover {    
+    color: #fff;
+    font-weight: bolder;
+}
+
+.mobile-label {
+    width: 80px;
+    display: inline-block;
+    font-weight: bold;
+}
+
+.mobile.mat-header-row {
+    display: none;
+}
+
+.mobile.mat-row {
+    flex-direction: column;
+    align-items: start;
+    padding: 6px 24px;
+}
+
+.mobile.mat-row:nth-child(even) {
+    background-color:rgb(235, 235, 235);
+}
+
+.mobile.mat-cell:first-of-type {
+    padding: 0px;
+}
+
+.element-hover {
+    cursor: pointer;
+}
+
+/* .column.four.mat-cell,
+.column.four.mat-header-cell
+{
+    flex: 0 0 4%;
+}
+
+.column.six.mat-cell,
+.column.six.mat-header-cell
+{
+    flex: 0 0 6%;
+}
+
+.column.ten.mat-cell,
+.column.ten.mat-header-cell
+{
+    flex: 0 0 10%;
+}
+
+.column.fifteen.mat-cell,
+.column.fifteen.mat-header-cell
+{
+    flex: 0 0 15%;
+}
+
+.column.twenty.mat-cell,
+.column.twenty.mat-header-cell
+{
+    flex: 0 0 20%;
+} */
+

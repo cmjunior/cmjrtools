@@ -1,0 +1,14 @@
+.form-container {
+  width: 100%;
+  padding: 4px;
+}
+
+.full-width {
+  width: 100%;
+}
+
+.action-row {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-around;
+}

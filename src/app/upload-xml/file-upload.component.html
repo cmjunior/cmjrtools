@@ -1,0 +1,40 @@
+<div fxLayout="row" fxLayoutGap="10px" fxLayoutAlign="center start">
+    <div [fxFlex]="(hasFiles$ | async) ? 50 : 100" class="dropzone" 
+        fileDrop
+        (filesHovered)="toggleHover($event)"
+        (filesDropped)="addToUpload($event)"
+        [class.hovering]="isHovering"
+        (click)="fileInput.click()">
+        
+        <div fxLayout="column" fxFill fxLayoutAlign="center center" fxLayoutGap="10px" class="container-empty">
+            <div>
+                <h3 style="font-weight: bolder;">Envie seus XMLs Para Analise</h3>
+            </div>
+            <div>
+                <mat-icon class="material-icon">attach_file</mat-icon>
+            </div>
+            <div>
+                <p>Arraste os arquivos ou clique aqui.</p>
+            </div>
+        </div>
+    
+        <input #fileInput accept="text/xml" style="display: none;" type="file" (change)="addToUpload($event.target.files)">
+    </div>
+
+    <div *ngIf="(hasFiles$ | async)" fxFlex="50" fxLayout="column" fxLayoutGap="4px">
+        <mat-selection-list #filesToUpload [(ngModel)]="selectedFiles">
+            <h2 mat-subheader>XMLs Selecionados</h2>
+            <mat-list-option *ngFor="let file of files; let idx = index" [value]="file">
+                <mat-icon mat-list-icon>insert_drive_file</mat-icon>
+                <h4 mat-line><small>{{ file.name }}</small></h4>
+                <p mat-line><small> Tamanho: {{  (file.size/1000).toFixed(2) }} Kb </small></p>
+            </mat-list-option>
+        </mat-selection-list>
+        <mat-divider *ngIf="filesToUpload.selectedOptions.selected.length > 0" [inset]="true"></mat-divider>
+        <div fxLayout="row" fxLayoutGap="4px" fxLayoutAlign="end end">
+            <button *ngIf="filesToUpload.selectedOptions.selected.length > 0" color="accent" mat-stroked-button (click)="removeSelected()">
+                Remover Selecionados
+            </button>
+        </div>
+    </div>
+</div>

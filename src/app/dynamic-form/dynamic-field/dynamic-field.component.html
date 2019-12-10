@@ -1,0 +1,51 @@
+<mat-form-field *ngIf="field.matField; else htmlField"
+  [class]="field.fullWidth ? 'full-width-field' : ''"
+  style="padding: 5px;" [ngSwitch]="field.controlType" [formGroup]="form">
+
+  <textarea *ngSwitchCase="'textarea'" matInput [formControlName]="field.key" [placeholder]="field.label" autocomplete="off"></textarea>
+
+  <mat-select *ngSwitchCase="'dropdown'" [formControlName]="field.key" [placeholder]="field.label">
+    <mat-option *ngFor="let option of field.options" [value]="option.key">{{option.value}}</mat-option>
+  </mat-select>
+
+  <input *ngSwitchCase="'maskedtextbox'" matInput [formControlName]="field.key" [placeholder]="field.label" field-mask [mask]="field.mask" autocomplete="off">
+
+  <div *ngSwitchCase="'autocomplete'">
+    <input [placeholder]="field.label" matInput [formControl]="autoCompleteControl" [matAutocomplete]="auto">
+    <mat-autocomplete  #auto="matAutocomplete">
+      <mat-option *ngFor="let item of filteredItems | async" [value]="item">
+        {{item}}
+      </mat-option>
+    </mat-autocomplete>
+  </div>
+
+  <ng-container *ngSwitchCase="'datePicker'">
+    <input matInput [formControlName]="field.key" [placeholder]="field.label" [owlDateTimeTrigger]="dt" [owlDateTime]="dt">
+  </ng-container>
+  
+  <input *ngSwitchDefault [type]="field.password && hide ? 'password' : 'text'" matInput [formControlName]="field.key" [placeholder]="field.label" autocomplete="off">
+  
+  <mat-icon *ngIf="field.controlType == 'datePicker'" style="cursor: pointer;" matSuffix [owlDateTimeTrigger]="dt">event</mat-icon>
+  <owl-date-time #dt></owl-date-time>
+  
+  <mat-icon *ngIf="field.password" matSuffix (click)="hide = !hide">{{hide ? 'visibility' : 'visibility_off'}}</mat-icon>
+
+  <mat-hint *ngIf=" hasHint "><span [innerHtml]="hint"></span></mat-hint>
+  <mat-error *ngIf="! isValid "><span [innerHtml]="error"></span></mat-error>
+</mat-form-field>
+
+<ng-template #htmlField>
+  <div [ngSwitch]="field.controlType" [formGroup]="form"
+    [ngStyle]="{'display': field.type == 'hidden' ? 'none' : 'block'}" style="padding: 5px;">
+    <p *ngSwitchCase="'radiobutton'">{{field.label}}</p><br/>
+    <mat-radio-group *ngSwitchCase="'radiobutton'" [formControlName]="field.key">
+      <mat-radio-button *ngFor="let option of field.options" [value]="option.value">{{option.key}}</mat-radio-button>
+    </mat-radio-group>
+
+    <mat-slide-toggle *ngSwitchCase="'slidetoggle'" [checked]="field.value" [formControlName]="field.key">{{field.label}}</mat-slide-toggle>
+
+    <mat-checkbox *ngSwitchCase="'checkbox'" [checked]="field.value" [formControlName]="field.key"><span [innerHtml]="field.label"></span></mat-checkbox>
+
+    <input *ngSwitchDefault [type]="field.type" [formControlName]="field.key">
+  </div>
+</ng-template>

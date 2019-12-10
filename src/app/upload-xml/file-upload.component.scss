@@ -1,0 +1,32 @@
+.dropzone { 
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column; 
+    height: 300px;    
+    border: 2px dashed #0c6f5f;
+    border-radius: 5px;
+    background: white;
+    margin: 10px;
+
+    &.hovering {
+        border: 2px solid #0c6f5f;
+        color: #dadada !important;
+    }
+}
+
+.dropzone:hover {
+    cursor: pointer;
+    border: 2px solid #0c6f5f;
+    color: #dadada !important;
+}
+
+.material-icon {
+    font-size: 48pt !important;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    vertical-align: middle;
+    margin-top: 20px;
+    margin-bottom: 20px;
+}

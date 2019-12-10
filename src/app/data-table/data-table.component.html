@@ -1,0 +1,35 @@
+<mat-table style="table-layout: fixed; width: 100%;" matSort [dataSource]="dataSource" class="mat-elevation-z4">
+  <ng-container *ngFor="let col of displayedColumns; let idx = index" [matColumnDef]="col">
+      <mat-header-cell *matHeaderCellDef 
+        [class]="getClassName(columnSize[idx])"
+        [ngClass]="{'number': 'FNM'.includes(columnType[idx]), 'center': 'CD'.includes(columnType[idx])}">
+        <strong>{{ displayedHeaders[idx] | uppercase }}</strong>
+      </mat-header-cell>
+      <mat-cell *matCellDef="let element" [class]="getClassName(columnSize[idx])"
+          [ngClass]="{'number': 'FNM'.includes(columnType[idx]), 'center': 'CD'.includes(columnType[idx]), 'mobile': isMobile}">
+          <strong *ngIf="isMobile" class="mobile-label">{{ displayedHeaders[idx] | uppercase }}</strong>
+          <span [ngSwitch]="columnType[idx]">
+              <ng-container *ngSwitchCase="'D'">{{element[col] | date:'dd/MM/yyyy HH:mm:ss' }}</ng-container>
+              <ng-container *ngSwitchCase="'F'">{{+element[col] | fixnumber:1 }}</ng-container>
+              <ng-container *ngSwitchCase="'N'">{{element[col] | currencyPipe:'BRL':false:false }}</ng-container>
+              <ng-container *ngSwitchCase="'M'">{{element[col] | currencyPipe }}</ng-container>
+              <ng-container *ngSwitchCase="'K'">{{element[col] | maskfield:columnMask[idx] }}</ng-container>
+              <ng-container *ngSwitchCase="'TPL'">
+                  <ng-template [ngTemplateOutlet]="actionsTemplate" [ngTemplateOutletContext]="{ $implicit: element }"></ng-template>
+              </ng-container>
+              <ng-container *ngSwitchDefault>{{element[col]}}</ng-container>
+          </span>
+      </mat-cell>
+  </ng-container>
+
+  <mat-header-row *matHeaderRowDef="displayedColumns;" [ngClass]="{'mobile': isMobile}" ></mat-header-row>
+  <mat-row *matRowDef="let row; columns: displayedColumns" [ngClass]="{'mobile': isMobile}" class="element-row"
+      [ngClass]="{'element-hover': !selectedElement}"
+      (click)="onSelectElement(row)">
+  </mat-row>
+</mat-table>
+
+<mat-paginator #paginator 
+  [length]="dataBase.data ? dataBase.data.length : 0" 
+  [pageSize]="15" [pageSizeOptions]="[5, 10, 15, 20, 25, 50, 100]">
+</mat-paginator>

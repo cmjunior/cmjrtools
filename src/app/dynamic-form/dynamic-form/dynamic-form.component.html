@@ -1,0 +1,16 @@
+<div class="form-container">
+  <h3>{{formTitle}}</h3>
+  <form fxLayout="column" [formGroup]="form">
+    <mat-grid-list cols="12" rowHeight="80px">
+      <mat-grid-tile *ngFor="let field of fields" [colspan]="field.columns" style="padding: 2px;">
+        <cmjr-dynamic-field class="full-width" [field]="field" [form]="form" [ngStyle]="{'display': field.type=='hidden' ? 'none' : 'flex'}"></cmjr-dynamic-field>
+      </mat-grid-tile>
+    </mat-grid-list>
+  </form>
+  <div class="action-row" *ngIf="showActions">
+    <span class="spacer"></span>
+    <button mat-raised-button color="accent">Limpar</button>
+    &nbsp;&nbsp;&nbsp;
+    <button (click)="onSubmit(form.value)" [disabled]="form.invalid" mat-raised-button color="primary">Salvar</button>
+  </div>
+</div>
